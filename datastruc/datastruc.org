@@ -1,0 +1,187 @@
+#+TITLE: جزوه ساختمان داده
+#+AUTHOR: @@latex:\rl{@@مهدی صفریان@@latex:}@@
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper]
+#+LATEX_HEADER:\usepackage{amsmath} \usepackage{tcolorbox}\newenvironment{block}[1][]{\begin{tcolorbox}[#1,colback=blue!5,colframe=blue!40!black]}{\end{tcolorbox}}
+#+LATEX_HEADER: \usepackage{xepersian}\settextfont{XB Roya}\setlatintextfont{XB Roya}\setmonofont{Iosevka}\setLTRbibitems
+#+LATEX_HEADER: \def\UrlBreaks{\do\/\do-}
+#+LATEX_HEADER: \xpretocmd{\verbatim}{\begin{LTR}}{}{} \xapptocmd{\endverbatim}{\end{LTR}}{}{} \xpretocmd{\minted}{\VerbatimEnvironment\begin{LTR}}{}{} \xapptocmd{\endminted}{\end{LTR}}{}{}
+#+LATEX_HEADER: \LetLtxMacro{\oldmintinline}{\mintinline}\renewcommand{\mintinline}[3][]{\lr{\oldmintinline[#1]{#2}{#3}}}
+#+LATEX_HEADER: \xpretocmd{\tabular}{\begin{latin}}{}{} \xapptocmd{\endtabular}{\end{latin}}{}{}
+#+LATEX_HEADER: \SetupFloatingEnvironment{listing}{name=کد}
+#+MACRO: lr @@latex:\lr{@@$1@@latex:}@@
+#+MACRO: rl @@latex:\rl{@@ $1 @@latex:}@@
+#+MACRO: lc src_latex[:exports code :results none]{$1}
+
+#+BEGIN_block
+از انجایی که درس ساختمان داده هیچ ویدیویی ندارد و جزوه اصلی درس صرفا شامل تمارین مدرس است، فلذا توضیحات درون این جزوه فقط برداشت شخصی بنده است.
+#+END_block
+
+* توابع بازگشتی
+تابع بازگشتی تابعی است که حداقل شامل یک دستور باشد و درون خود، خودش را صدا بزند؛ توابع بازگشتی به تعداد محدود اجرا می‌شوند و پس از رسیدن به نتیجه مطلوب متوقف می‌شوند.
+
+** مثال فاکتوریل
+فاکتوریل حاصل‌ضرب اعداد =n= تا ۱ را حساب می‌کند.
+برای مثال فاکتوریل عدد ۳ برابر است با {{{lc(3 * 2 * 1)}}}.
+
+#+name: فاکتوریل
+#+CAPTION: فاکتوریل
+#+BEGIN_SRC python
+function fact(n) {
+    if n==1                         #Fact function rules:
+        return 1                    #$fact(n)=\begin{cases}1, \hspace{3.2cm} \text{n=1}.\\ n*fact(n-1), \hspace{1cm} \text{n>1}. \end{cases}$
+    else
+        return n * fact(n-1)
+}
+#+END_SRC
+
+
+
+*** توضیحات
+همانطور که گفته شد تابع فاکتوریل حاصل‌ضرب اعداد n تا ۱ را به دست می‌آورد. [[ref:فاکتوریل][کد ۱]]
+
+- ابتدا به تابع مقداری را به عنوان ورودی می‌دهیم.
+- سپس اگر عدد ورودی تابع برابر ۱ بود، تابع متوقف شود.
+- در غیر این صورت اگر عددی غیر از ۱ بخش دوم تابع اجرا می‌شود.
+
+  مثال: فاکتوریل عدد ۴ را محاسبه کنید.
+
+#+BEGIN_SRC latex :wrap LTR
+$fact(4)=4*3*2*1=24$
+- $fact(4)= 4*fact(3)=> 4*6=24$
+- $fact(3)=3*fact(2)=> 3*2=6$
+- $fact(2)=2*fact(2)=> 2*1=2$
+#+END_SRC
+
+
+** مجموع اعداد ۱ تا n
+این تابع به سادگی همانطور که نامش مشخص است مجموع اعداد ۱ تا n را محاسبه می‌کند.
+
+#+CAPTION: مجموع اعداد ۱ تا n
+#+BEGIN_SRC python :exports code :results output
+def sum(n):
+    if n == 1:                    #sum function rules:
+        return 1               #$sum(n)=\begin{cases}1, \hspace{3.1cm} n=1. \\ n+sum(n-1) \hspace{1cm} n>1.\end{cases}$
+    else:
+        print(n)
+        return n + sum(n-1)
+print(sum(7))
+#+END_SRC
+
+#+RESULTS:
+: 7
+: 6
+: 5
+: 4
+: 3
+: 2
+: 28
+
+مثال: مجموع اعداد ۱ تا ۳ را بیابید.
+
+#+BEGIN_SRC latex :wrap LTR
+$sum(3)=3+2+1=6$
+- $sum(3)=3+sum(2)=> 3+3=6$
+- $sum(2)=2+sum(1)=> 2+1=3$
+#+END_SRC
+
+** توان
+تابع توان مقدار $n^m$ را حساب می‌کند(ورودی‌ها صحیح و مثبت هستند)
+به سادگی عمل توان رسانی را حساب می‌کند.
+
+#+BEGIN_SRC python :exports code
+function power(n, m){
+    if m==1                         #power function rules:
+        return n                    #$power(n, m)=\begin{cases}n, \hspace{3.7cm} m=1. \\ n*power(n, m-1) \hspace{1cm} m>1.\end{cases}$
+    else
+        return n * power(n,m-1)
+
+    }
+#+END_SRC
+
+مثال: تابع توان را فراخوانی کنید و با مقدار دلخواه مثال بزنید.
+
+#+BEGIN_SRC latex :wrap LTR
+$power(3,4)=> 3*3*3*3=81$
+- $power(3,4)= 3*power(3,3)=3*3*3*3$
+- $power(3,3)= 3*power(3,2)=3*3*3$
+- $power(3,2)= 3*power(3,1)=3*3$
+#+END_SRC
+
+#+RESULTS:
+
+
+** خارج قسمت تقسیم
+تابع خارج قسمت تقسیم مقدار خارج قسمت تقسیم صحیح a بر b را محاسبه می‌کند.
+تاکید می‌کنم که هدف ما تقسیم صحیح است.
+
+#+BEGIN_SRC python :exports code :results output
+def div(a,b):
+    if a<b:                 #div function rules:
+        return 0            #$div(a,b)=\begin{cases}0, \hspace{3.2cm} a<b. \\ div(a-b,b)+1, \hspace{1cm} a>=b. \end{cases}$
+    if a>=b:
+        return div(a-b,b)+1
+#+END_SRC
+
+#+RESULTS:
+
+*** توضیحات
+- در مرحله اول بررسی می‌شود آیا عدد a بزرگتر از b است یا خیر.
+  - اگر کوچک‌تر باشد مقدار صفر برمی‌گردد چرا که ما مقدار تقسیم صحیح را می‌خواهیم.
+  - اگر بزرگتر یا مساوی باشد عدد a برابر می‌شود با a-b و در نهایت مقدار نهایی یه واحد به آن اضافه می‌شود.
+
+مثال: با استفاده از تابع div مقادیر a = 11 و b = 3 را بررسی کنید.
+
+#+BEGIN_SRC latex :wrap LTR
+
+$div(11,3)=> 2+1=3$
+- $div(11,3)= div(8,3)+1 => 2+1=3$
+- $div(8,3)=  div(5,3)+1 => 1+1=2$
+- $div(5,3)=  div(2,3)+1 => 0+1=1$
+#+END_SRC
+
+** تابع باقی مانده تقسیم
+
+#+BEGIN_SRC python :exports code :results output
+def r(a,b):
+    if a<b:
+        return a
+    else:
+        return r(a-b,b)
+print(r(11,3))
+#+END_SRC
+
+#+RESULTS:
+: 1
+
+** هانوی
+در مسئله برج هانوی ما می‌خواهیم تعداد n مهره را از میله A به C ببریم و میله B به عنوان میله کمکی استفاده کنیم.
+
+#+BEGIN_SRC python :exports code
+def tower(n, A, B, C):
+    if n==1:
+        return A to C
+    else:
+        tower(n-1, A, B, C)
+        A to C
+        tower(n-1, B, A, C)
+#+END_SRC
+
+*** توضیحات
+- ابتدا n-1 مهره را به میله B انتقال می‌دهیم و در نهایت بزرگترین مهره در A باقی می‌ماند.
+- بعد مهره بزرگ را به میله C منتقل می‌کنیم.
+- در آخر مانند مرحله اول مهره‌ها را از B به C انقال می‌دهیم.
+
+یادتان باشد که برای انتقال مهره‌ها باید از میله‌های کمکی استفاده کنیم.
+[[./tower.jpg]]
+
+** فیبوناچی
+تابع فیبوناچی جمله nام اعداد فیبوناچی را به دست می‌اورد.
+
+#+BEGIN_SRC python :exports code :results output
+def fib(n):
+    if n==0 or n==1:                        #Fibonacci function rules:
+        return n                            #$fib(n)=\begin{cases}n \hspace{4.4cm} 1 \\ n \hspace{4.4cm} 0 \\ fib(n-1)+fib(n-2) \hspace{1cm} n>=2 \end{cases}$
+    else:
+        return fib(n-1) + fib(n-2)
+#+END_SRC
